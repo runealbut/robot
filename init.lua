@@ -12,7 +12,7 @@ minetest.register_chatcommand('start',{
     end
 })
 
-minetest.register_chatcommand('end',{
+minetest.register_chatcommand('stop',{
     description = 'End map exploration',
     privs = {privs=false},
     func = function(name, params)
@@ -42,27 +42,8 @@ minetest.register_globalstep(function(dtime)
 						v.c = v.l
 					end
 					local position_spieler = player:getpos()
-					--local dx = math.sin(math.rad(v.d))
-					--local dz = math.cos(math.rad(v.d))
-					--[[local player_pos = player:getpos()
-					--pos = {x = player_pos.x + explore_steps_width * dx, y = player_pos.y, z = player_pos.z + explore_steps_width * dz}
-					pos = {x = player_pos.x + explore_steps_width , y = player_pos.y, z = player_pos.z }
-					-- player:setpos(pos)
-					minetest.env:add_node({x=pos.x,   y=pos.y-1, z=pos.z  },{name="default:cobble"})
-					minetest.env:add_node({x=pos.x,   y=pos.y-1, z=pos.z+1  },{name="default:cobble"})
-					minetest.env:add_node({x=pos.x,   y=pos.y-1, z=pos.z+2  },{name="default:cobble"})
-					minetest.env:add_node({x=pos.x,   y=pos.y-1, z=pos.z+3  },{name="default:cobble"})
-					for variable_hoehe = 0,2,1 do
-					  for variable_breite= 0,3,1 do
-					    if minetest.env:get_node({x=pos.x, y=pos.y+variable_hoehe, z=pos.z+variable_breite}).name ~= "air" then
-					      minetest.env:add_node({x=pos.x,   y=pos.y+variable_hoehe, z=pos.z+variable_breite  },{name="air"})
-					    end
-					  end
-					end
-					minetest.env:add_node({x=pos.x,   y=pos.y+1, z=pos.z+3  },{name="default:torch"})
-					minetest.env:add_node({x=pos.x,   y=pos.y+1, z=pos.z+0  },{name="default:torch"})
-					player:moveto(pos)]]
-					tunnel(position_spieler,player)
+					
+					position_spieler= tunnel(position_spieler,player)
 					v.c = v.c - 1
 				end
 				v.wait = v.wait - 1
@@ -80,9 +61,10 @@ function tunnel (player_pos,spieler)
 	      minetest.env:add_node({x=pos.x,   y=pos.y-1, z=pos.z+3  },{name="default:cobble"})
 		for variable_hoehe = 0,2,1 do
 			for variable_breite= 0,3,1 do
-				 if minetest.env:get_node({x=pos.x, y=pos.y+variable_hoehe, z=pos.z+variable_breite}).name ~= "air" then
+				--[[ if minetest.env:get_node({x=pos.x, y=pos.y+variable_hoehe, z=pos.z+variable_breite}).name ~= "air" then
 				    minetest.env:add_node({x=pos.x,   y=pos.y+variable_hoehe, z=pos.z+variable_breite  },{name="air"})
-				 end
+				 end]]
+				minetest.env:remove_node({x=pos.x, y=pos.y+variable_hoehe, z=pos.z+variable_breite})
 			 end
 		end
 		minetest.env:add_node({x=pos.x,   y=pos.y+1, z=pos.z+3  },{name="default:torch"})
