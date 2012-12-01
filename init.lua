@@ -67,8 +67,31 @@ function tunnel (player_pos,spieler)
 				minetest.env:remove_node({x=pos.x, y=pos.y+variable_hoehe, z=pos.z+variable_breite})
 			 end
 		end
-		minetest.env:add_node({x=pos.x,   y=pos.y+1, z=pos.z+3  },{name="default:torch"})
-		minetest.env:add_node({x=pos.x,   y=pos.y+1, z=pos.z+0  },{name="default:torch"})
+		
+		if ((pos.x%5) <1) then 
+		  minetest.env:add_node({x=pos.x,   y=pos.y+2, z=pos.z+1  },{name="default:torch"})
+		  minetest.env:add_node({x=pos.x,   y=pos.y+2, z=pos.z+2  },{name="default:torch"})
+		  minetest.env:add_node({x=pos.x,   y=pos.y-1, z=pos.z-1},{name="default:cobble"})
+		  minetest.env:add_node({x=pos.x,   y=pos.y-1, z=pos.z+4},{name="default:cobble"})
+		  for hoehe1=0,3,1 do
+		    if minetest.env:get_node({x=pos.x, y=pos.y+hoehe1, z=pos.z-1}).name == "air" then
+		      minetest.env:add_node({x=pos.x,   y=pos.y+hoehe1, z=pos.z-1  },{name="default:fence_wood"})
+		    end
+		    
+		    if minetest.env:get_node({x=pos.x,   y=pos.y+hoehe1, z=pos.z+4  }).name == "air" then
+		      minetest.env:add_node({x=pos.x,   y=pos.y+hoehe1, z=pos.z+4  },{name="default:fence_wood"})
+		    end
+		  end
+
+		  for breite1 =0,3,1 do
+		      if minetest.env:get_node({x=pos.x, y=pos.y+3, z=pos.z+breite1}).name == "air" then
+		      minetest.env:add_node({x=pos.x,   y=pos.y+3, z=pos.z+breite1 },{name="default:fence_wood"})
+		      end
+		  end
+		  
+
+		  
+		end
 		spieler:moveto(pos)
 		return spieler
  end
